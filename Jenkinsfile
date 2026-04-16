@@ -3,9 +3,19 @@ pipeline {
 
     environment {
         IMAGE = "abhi842/quick-note-app:v1"
+        DOCKER_CONFIG = "/tmp/docker-config"
     }
 
     stages {
+
+        stage('Prepare Docker Config') {
+            steps {
+                sh '''
+                mkdir -p /tmp/docker-config
+                echo '{ "auths": {} }' > /tmp/docker-config/config.json
+                '''
+            }
+        }
 
         stage('Build Docker') {
             steps {
