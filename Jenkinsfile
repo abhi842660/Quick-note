@@ -9,7 +9,8 @@ pipeline {
 
         stage('Build Docker') {
             steps {
-                sh 'docker build -t $IMAGE .'
+                sh '/usr/local/bin/docker --version'
+                sh '/usr/local/bin/docker build -t $IMAGE .'
             }
         }
 
@@ -17,8 +18,8 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
                     sh '''
-                    docker login -u $USER -p $PASS
-                    docker push $IMAGE
+                    /usr/local/bin/docker login -u $USER -p $PASS
+                    /usr/local/bin/docker push $IMAGE
                     '''
                 }
             }
