@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quick-note-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: quick-note
+  template:
+    metadata:
+      labels:
+        app: quick-note
+    spec:
+      containers:
+      - name: quick-note-container
+        image: abhi842/quick-note-app:v1
+        ports:
+        - containerPort: 80
