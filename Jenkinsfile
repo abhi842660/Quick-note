@@ -7,12 +7,6 @@ pipeline {
 
     stages {
 
-        stage('Clone') {
-            steps {
-                git 'https://github.com/abhi842660/Quick-note.git'
-            }
-        }
-
         stage('Build Docker') {
             steps {
                 sh 'docker build -t $IMAGE .'
