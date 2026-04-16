@@ -17,14 +17,14 @@ pipeline {
             }
         }
 
-        stage('Build Docker') {
+        stage('Build Docker Image') {
             steps {
                 sh '/usr/local/bin/docker --version'
                 sh '/usr/local/bin/docker build -t $IMAGE .'
             }
         }
 
-        stage('Push Docker') {
+        stage('Push Docker Image') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
                     sh '''
@@ -35,10 +35,10 @@ pipeline {
             }
         }
 
-        stage('Deploy to K8s') {
+        stage('Deploy to Kubernetes') {
             steps {
-                sh 'kubectl apply -f k8s/deployment.yaml'
-                sh 'kubectl apply -f k8s/service.yaml'
+                sh '/opt/homebrew/bin/kubectl apply -f k8s/deployment.yaml'
+                sh '/opt/homebrew/bin/kubectl apply -f k8s/service.yaml'
             }
         }
     }
